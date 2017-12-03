@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 	int sum = 0;
-	vector<int> diffs;
+	vector<int> totals;
 
 	if (argc != 2)	{
 		cout << "Incorrect number of arguments" << endl;
@@ -22,23 +22,33 @@ int main(int argc, char *argv[])
 
 	while (getline(infile, line))	{
 		stringstream stream(line);
-		int max = INT_MIN, min = INT_MAX;
+		vector<int> lineNums;
 		while(stream)	{
 			int num;
 			stream >> num;
-
-			min = std::min(min, num);
-			max = std::max(max, num);
+			lineNums.push_back(num);
 		}
 
-		// Add diff of max and min to diffs vector
-		diffs.push_back(max - min);
+		int quotient = -1;
+		for (int i = 0; i < lineNums.size(); i++)	{
+			for (int j = 0; j < lineNums.size(); j++)	{
+				if (lineNums[i] > lineNums[j] && lineNums[i]%lineNums[j] == 0)	{
+					quotient = lineNums[i]/lineNums[j];
+					break;
+				}
+			}
+			if (quotient != -1)
+				break;
+		}
+
+		// Add quotient to totals vector
+		totals.push_back(quotient);
 	}
 
-	for (int i : diffs)
+	for (int i : totals)
 		sum+=i;
 
-	cout << "Total Diff = " << sum << endl;
+	cout << "Total Sum = " << sum << endl;
 
 	return 0;
 }
