@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
-*.swp
+
+# Vim Stuff
+.*.swp
+.fuse_hidden*
 
 # Compiled Object files
 *.slo
