@@ -1,4 +1,5 @@
-aa ee bb
-aa eeen aa
-ee nn arst
-abcde nn edcba
+0
+3
+0
+1
+-3

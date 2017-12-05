@@ -20,10 +20,22 @@ int main(int argc, char *argv[])
 		jumps.push_back(curr);
 	}
 
+	int numSteps = 0;
+	int pos = 0;
+
+	while (pos >= 0 && (size_t)pos < jumps.size())	{
+		if (jumps[pos] > 2)
+			pos += jumps[pos]--;
+		else
+			pos += jumps[pos]++;
+		numSteps++;
+	}
+
+
 	for (int i : jumps)
 		cout << i << endl;
 
-	//cout << "Total Sum = " << sum << endl;
+	cout << "Total numSteps = " << numSteps << endl;
 
 	return 0;
 }
