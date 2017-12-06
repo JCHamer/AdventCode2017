@@ -1,4 +1,1 @@
-V
-aa eeen aa
-ee nn arst
-abcde nn edcba
+0	2	7	0
