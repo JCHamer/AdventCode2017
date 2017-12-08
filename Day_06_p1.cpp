@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	int numSteps = 0;
+	int numSteps = 1;
 	vector<double> prevStates;
 	vector<uint> buckets;
 
@@ -26,26 +26,27 @@ int main(int argc, char *argv[])
 
 	double acc = 0;
 	for (uint x = 0; x < buckets.size(); x++)
-		acc += buckets[x] * (pow(2,(buckets.size() - x - 1)));
+		acc += buckets[x] * (pow(10,(buckets.size() - x - 1)));
 	prevStates.push_back(acc);
 
 	while (true)	{
 		uint pos = 0;
-		for (uint i = 0; i < buckets.size(); i++)	{
+		for (uint i = 1; i < buckets.size(); i++)	{
 			if (buckets[i] > buckets[pos])
 				pos = i;
 		}
 
-		uint numToDist = buckets[pos++];
+		uint numToDist = buckets[pos];
+		buckets[pos++] = 0;
 		for (; numToDist > 0; numToDist--)	{
 			if (pos >= buckets.size())
 				pos = 0;
-			buckets[pos] = numToDist;
+			buckets[pos++]++;
 		}
 
 		double acc = 0;
 		for (uint x = 0; x < buckets.size(); x++)
-			acc += buckets[x] * (pow(2,(buckets.size() - x - 1)));
+			acc += buckets[x] * (pow(10,(buckets.size() - x - 1)));
 		bool match = false;
 		for (double x : prevStates)	{
 			if (x == acc)
