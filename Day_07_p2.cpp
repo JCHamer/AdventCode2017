@@ -17,6 +17,7 @@ struct node	{
 node* findNode(string name, vector<node*> nodes);
 void deleteTree(vector<node*>);
 int assignChildWeights(node* root);
+void findWeightDiff(node *start, node* parent, uint childNum);
 
 int main(int argc, char *argv[])
 {
@@ -126,26 +127,55 @@ void deleteTree(vector<node*> nodes)	{
 int assignChildWeights(node* root)	{
 	int total = 0;
 
-	for (node * child : root->children)	{
-		child->childrenWeight = assignChildWeights(child);
-		total += child->childrenWeight + child->weight;
+	for (uint i = 0; i < root->children.size(); i++)	{
+		root->children[i]->childrenWeight = assignChildWeights(root->children[i]);
+		total += root->children[i]->childrenWeight + root->children[i]->weight;
 	}
 
-	if (root->children.size() > 2)	{
-		if ((root->children[0]->childrenWeight + root->children[0]->weight) != (root->children[1]->childrenWeight + root->children[1]->weight))	{
-			cout << "Use correct weight of: " << root->children[2]->childrenWeight + root->children[2]->weight << endl;
-		}
-		else	{
-			int compWeight = root->children[0]->childrenWeight + root->children[0]->weight;
-			for (uint i = 2; i < root->children.size(); i++)	{
-				if (compWeight != (root->children[i]->childrenWeight + root->children[i]->weight))	{
-					cout << "Use correct weight of: " << compWeight << endl;
-				}
-			}
-		}
+	for (uint i = 0; i < root->children.size(); i++)	{
+		findWeightDiff(root->children[i], root, i);
 	}
 
 
 	return total;
 }
 
+void findWeightDiff(node *start, node* parent, uint childNum)	{
+	// Find the total weight that this node and its children should weigh
+	int weight;
+	if (childNum > 0)
+		weight = parent->children[childNum-1]->childrenWeight + parent->children[childNum-1]->weight;
+	else if (parent->children.size() > 1)
+		weight = parent->children[1]->childrenWeight + parent->children[1]->weight;
+	else	{
+		cout << "branch with only 1 child" << endl;
+		exit (-1);
+	}
+	weight -= start->weight;
+
+	int check  = -1;
+	for (uint i = 0; (int)i < (int)start->children.size(); i++)	{
+		if ((start->children[i]->childrenWeight + start->children[i]->weight) != weight/(int)start->children.size())	{
+			check = (int)i;
+		}
+	}
+
+	if (check == -1)
+		return;
+
+//	node *child1 = start->children[(uint)check];
+//	node *child2 = start->children[(uint)check + 1];
+
+	int corrWeight = start->weight + weight - start->childrenWeight;
+
+	/*
+	 *First output for when the mistake is an inner node, it will be output from the first line
+	 *Last output for when the mistake comes from a leaf, it will be output from the second line
+	 */
+	cout << "Correct branch weight is: " << corrWeight << endl;	
+	cout << "Correct branch weight is: " << weight / (int)start->children.size() << endl;
+
+	
+
+	
+}

@@ -1,0 +1,21 @@
+[
+    {
+        "arguments": [
+            "c++",
+            "-c",
+            "-Wconversion",
+            "-Wall",
+            "-Werror",
+            "-Wextra",
+            "-pedantic",
+            "-std=c++11",
+            "-g",
+            "-DDEBUG",
+            "-o",
+            "currDay.o",
+            "currDay.cpp"
+        ],
+        "directory": "/run/media/JCHMedia/Programming/Workspace/Practice/AdventCode",
+        "file": "currDay.cpp"
+    }
+]
