@@ -29,19 +29,31 @@ int main(int argc, char *argv[])
 				currNum = currNum.substr(0,currNum.size() - 1);
 			uint num = (uint)stoi(currNum);
 
-			if ((int)num - 1 > (int)pipes.size())	{
+			if ((int)num > (int)pipes.size() - 1)	{
 				pipes.push_back((uint)pipes.size());
 				while (pipes.size() - 1 < (uint)num)
 					pipes.push_back((uint)pipes.size());
 			}
 
-			if (pipes[num] > (uint)groupID)	{
-				pipes[num] = (uint)groupID;
+			if (pipes[num] > pipes[groupID])	{
+				pipes[num] = pipes[groupID];
 			}
 		}
 	}
 
-	int count = 0;
+	bool madeChange = true;
+	uint count = 0;
+	while (madeChange)	{
+		madeChange = false;
+		if (pipes[count] != pipes[pipes[count]])	{
+			madeChange = true;
+			pipes[count] = min(pipes[pipes[count]], pipes[count]);
+			pipes[pipes[count]] = min(pipes[pipes[count]], pipes[count]);
+		}
+		count++;
+	}
+
+	count = 0;
 	for (uint x : pipes)	{
 		if (x == 0)
 			count++;
