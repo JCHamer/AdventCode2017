@@ -9,8 +9,6 @@
             "-Wextra",
             "-pedantic",
             "-std=c++11",
-            "-g",
-            "-DDEBUG",
             "-o",
             "currDay.o",
             "currDay.cpp"
